@@ -140,8 +140,12 @@ api.interceptors.request.use((config) => {
 export default api;
 ```
 
+### Live Demo
+- Live frontend: https://seizuresafe-frontend.vercel.app/
+
+- live backend: (https://week-8-capstone-emmaculate-m.onrender.com)
+
 ## Next Steps
 - Hook up Register & Login pages with real backend
 - Test form submissions (Add Seizure, Emergency Alert)
 - Add user feedback & error handling
-- Deploy backend to Render & frontend to Netlify or Vercel
