@@ -1,52 +1,147 @@
-# MERN Stack Capstone Project
+# SeizureSafe(A Seizure Tracker & Emergency Alert Web App (MERN Stack))
 
-This assignment focuses on designing, developing, and deploying a comprehensive full-stack MERN application that showcases all the skills you've learned throughout the course.
+This is a full-stack web application to help epilepsy patients track seizure events, send emergency alerts, and access their health history. The application is built using the **MERN stack**: MongoDB, Express.js, React.js, and Node.js.
 
-## Assignment Overview
+## Tech Stack
+- **Frontend**: Vite + React + TailwindCSS  
+- **State Management**: React Context API (AuthContext)  
+- **Routing**: React Router v6  
+- **Backend**: Express.js + MongoDB + Mongoose  
+- **Auth**: JWT-based authentication  
+- **HTTP Client**: Axios  
 
-You will:
-1. Plan and design a full-stack MERN application
-2. Develop a robust backend with MongoDB, Express.js, and Node.js
-3. Create an interactive frontend with React.js
-4. Implement testing across the entire application
-5. Deploy the application to production
+## Features Implemented So Far
 
-## Getting Started
+### Authentication
+- Register & Login (JWT + bcrypt)
+- Token is stored in `localStorage` and added to all protected API requests via Axios
+- `AuthContext` to manage login state
+- Protected routes using `PrivateRoute` wrapper
 
-1. Accept the GitHub Classroom assignment
-2. Clone the repository to your local machine
-3. Follow the instructions in the `Week8-Assignment.md` file
-4. Plan, develop, and deploy your capstone project
+### Routing & Layout
+- Basic routing setup via `react-router-dom`
+- `App.jsx` as the layout shell using `<Outlet />`
+- Public pages: `/`, `/register`, `/login`
+- Private pages: `/dashboard`, `/add-seizure`, `/emergency-alert`
 
-## Files Included
+### Frontend Pages Created
+- `Home.jsx`
+- `Register.jsx`
+- `Login.jsx`
+- `Dashboard.jsx`
+- `AddSeizure.jsx`
+- `EmergencyAlert.jsx`
 
-- `Week8-Assignment.md`: Detailed assignment instructions
+### Components
+- `AlertCard.jsx` — reusable alert/notification component  
+- `SeizureForm.jsx` — reusable form component for adding seizure info  
 
-## Requirements
+### Backend Routes
 
-- Node.js (v18 or higher)
-- MongoDB (local installation or Atlas account)
-- npm or yarn
-- Git and GitHub account
-- Accounts on deployment platforms (Render/Vercel/Netlify/etc.)
+| Route | Method | Description |
+|-------|--------|-------------|
+| `/api/auth/register` | POST | Register a new user |
+| `/api/auth/login` | POST | Login & receive JWT |
+| `/api/seizure/` | GET, POST | View & add seizure entries (protected) |
+| `/api/seizure/:id` | DELETE | Delete seizure record (protected) |
+| `/api/alert/emergency` | POST | Send emergency alert (protected) |
 
-## Project Ideas
+### Middleware
+- `authMiddleware.js` to protect private API routes via JWT token
 
-The `Week8-Assignment.md` file includes several project ideas, but you're encouraged to develop your own idea that demonstrates your skills and interests.
+## Folder Structure (Frontend)
+```
+src/
+├── App.jsx
+├── main.jsx
+├── index.css
+├── context/
+│   └── AuthContext.jsx
+├── routes/
+│   └── PrivateRoute.jsx
+├── pages/
+│   ├── Home.jsx
+│   ├── Register.jsx
+│   ├── Login.jsx
+│   ├── Dashboard.jsx
+│   ├── AddSeizure.jsx
+│   └── EmergencyAlert.jsx
+├── components/
+│   ├── AlertCard.jsx
+│   ├── Navbar.jsx
+│   └── SeizureForm.jsx
+├── utils/
+│    └── api.js
+├── .env
+```
 
-## Submission
+## Folder Structure (Backend)
+```
+server/
+├── models/
+│   ├── SeizureLog.js 
+│   └── User.js
+├── routes/
+│   ├── auth.js
+│   ├── seizure.js
+│   ├── alert.js
+│   └── user.js
+├── controllers/
+│   ├── authController.js
+│   ├── seizureController.js
+│   └── alertController.js
+├── middleware/
+│   └── authMiddleware.js
+├── config/
+│   └── db.js
+├── .env
+└── server.js
+```
 
-Your project will be automatically submitted when you push to your GitHub Classroom repository. Make sure to:
+##  To Run the Project
 
-1. Commit and push your code regularly
-2. Include comprehensive documentation
-3. Deploy your application and add the live URL to your README.md
-4. Create a video demonstration and include the link in your README.md
+### Backend
+```bash
+cd server
+pnpm install
+pnpm dev
+```
 
-## Resources
+Ensure you have a `.env` with:
+```
+MONGO_URI=your_mongodb+srv://seizureAdmin:Nuru%2574710@cluster0.uqfpccd.mongodb.net/seizureTrackerDB?retryWrites=true&w=majority&appName=Cluster0mongodb_connection_string
+JWT_SECRET=big_secret
+PORT=5000
+```
 
-- [MongoDB Documentation](https://docs.mongodb.com/)
-- [Express.js Documentation](https://expressjs.com/)
-- [React Documentation](https://react.dev/)
-- [Node.js Documentation](https://nodejs.org/en/docs/)
-- [GitHub Classroom Guide](https://docs.github.com/en/education/manage-coursework-with-github-classroom) 
+### Frontend
+```bash
+pnpm install
+pnpm dev
+```
+
+Ensure `utils/api.js` contains:
+```js
+import axios from 'axios';
+
+const api = axios.create({
+  baseURL: 'http://localhost:5000/api',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
+
+export default api;
+```
+
+## Next Steps
+- Hook up Register & Login pages with real backend
+- Test form submissions (Add Seizure, Emergency Alert)
+- Add user feedback & error handling
+- Deploy backend to Render & frontend to Netlify or Vercel
