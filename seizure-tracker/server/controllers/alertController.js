@@ -16,7 +16,7 @@ export const sendEmergencyAlert = async (req, res) => {
   await transporter.sendMail({
     from: process.env.EMAIL_USER,
     to: user.emergencyContact,
-    subject: '🚨 Seizure Emergency Alert',
+    subject: 'Seizure Emergency Alert',
     text: `${user.name} may be having a seizure. Please check on them immediately.`
   });
 

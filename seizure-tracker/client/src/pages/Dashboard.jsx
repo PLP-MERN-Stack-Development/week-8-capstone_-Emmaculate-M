@@ -10,12 +10,12 @@ export default function Dashboard() {
     if (!token) return;
     const fetchUserData = async () => {
       try {
-        const userRes = await axios.get('http://localhost:5000/api/users/me', {
+        const userRes = await axios.get('https://week-8-capstone-emmaculate-m.onrender.com/api/users/me', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUserInfo(userRes.data);
 
-        const seizuresRes = await axios.get('http://localhost:5000/api/seizures', {
+        const seizuresRes = await axios.get('https://week-8-capstone-emmaculate-m.onrender.com', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setSeizures(seizuresRes.data);
