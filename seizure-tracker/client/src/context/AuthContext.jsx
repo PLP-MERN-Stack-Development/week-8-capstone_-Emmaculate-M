@@ -1,7 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react'; 
 import { useNavigate } from 'react-router-dom';
-import axios from '../utils/api'; // This uses your base Axios instance
-
+import axios from '../utils/api'; 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -20,7 +19,7 @@ export const AuthProvider = ({ children }) => {
 
     let parsedUser = null;
     try {
-      if (storedUser) {
+      if (storedUser && storedUser !== "undefined") {
         parsedUser = JSON.parse(storedUser);
       }
     } catch (error) {

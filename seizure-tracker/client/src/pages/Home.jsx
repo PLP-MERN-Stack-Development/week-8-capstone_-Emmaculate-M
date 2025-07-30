@@ -6,7 +6,7 @@ export default function Home() {
         Your personal seizure tracking and emergency alert companion.
         Monitor your health, log seizures, and stay connected to family and caregivers.
       </p>
-      <p className="text-md text-violet font-semibold">
+      <p className="text-md text-indigo font-semibold">
         Join our community and take control of your epilepsy management today.
       </p>
     </main>

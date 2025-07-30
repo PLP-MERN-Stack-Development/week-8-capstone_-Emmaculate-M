@@ -1,17 +1,27 @@
+import { CheckCircle, AlertCircle, Info, AlertTriangle } from 'lucide-react';
+
 export default function AlertCard({ message, type = 'info' }) {
-  const typeColors = {
-    success: 'bg-cream text-indigo border-indigo',
-    error: 'bg-orchid text-cream border-violet',
-    warning: 'bg-violet text-cream border-orchid',
-    info: 'bg-indigo text-cream border-violet',
+  const icons = {
+    success: <CheckCircle className="w-5 h-5 mr-2 text-[#420264]" />,
+    error: <AlertCircle className="w-5 h-5 mr-2 text-[#EFE1E8]" />,
+    warning: <AlertTriangle className="w-5 h-5 mr-2 text-[#EFE1E8]" />,
+    info: <Info className="w-5 h-5 mr-2 text-[#EFE1E8]" />,
+  };
+
+  const typeStyles = {
+    success: 'bg-[#EFE1E8] text-[#420264] border-[#420264]',
+    error: 'bg-[#7E3680] text-[#EFE1E8] border-[#A654DF]',
+    warning: 'bg-[#A654DF] text-[#EFE1E8] border-[#7E3680]',
+    info: 'bg-[#420264] text-[#EFE1E8] border-[#A654DF]',
   };
 
   return (
     <div
-      className={`border-l-4 p-4 rounded mb-4 ${typeColors[type] || typeColors.info}`}
+      className={`flex items-start border-l-4 p-4 rounded-xl shadow-sm ${typeStyles[type] || typeStyles.info}`}
       role="alert"
     >
-      <p className="font-medium">{message}</p>
+      {icons[type]}
+      <p className="text-sm font-medium leading-relaxed">{message}</p>
     </div>
   );
 }

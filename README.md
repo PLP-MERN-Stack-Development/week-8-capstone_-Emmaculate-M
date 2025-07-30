@@ -1,53 +1,83 @@
 # SeizureSafe(A Seizure Tracker & Emergency Alert Web App (MERN Stack))
 
-This is a full-stack web application to help epilepsy patients track seizure events, send emergency alerts, and access their health history. The application is built using the **MERN stack**: MongoDB, Express.js, React.js, and Node.js.
+SeizureSafe is a full-stack web application designed to help users track seizures and store an emergency contact for quick response in case of a seizure event. 
 
+## Features
+
+- User registration and authentication (JWT-based)
+- Seizure logging, editing, and deletion
+- User profile with personal medical information
+- Emergency contact management (view and update)
+- Emergency alert button to notify the emergency contact
+- Responsive and accessible user interface
+
+ 
 ## Tech Stack
-- **Frontend**: Vite + React + TailwindCSS  
-- **State Management**: React Context API (AuthContext)  
-- **Routing**: React Router v6  
-- **Backend**: Express.js + MongoDB + Mongoose  
-- **Auth**: JWT-based authentication  
-- **HTTP Client**: Axios  
 
-## Features Implemented So Far
+- Frontend: React (Vite), Tailwind CSS
+- Backend: Node.js, Express
+- Database: MongoDB (Mongoose)
+- Authentication: JSON Web Tokens (JWT)
+- API Communication: Axios
 
-### Authentication
-- Register & Login (JWT + bcrypt)
-- Token is stored in `localStorage` and added to all protected API requests via Axios
-- `AuthContext` to manage login state
-- Protected routes using `PrivateRoute` wrapper
+## Getting Started
+### Prerequisites
+Node.js (v18+ recommended)
+MongoDB instance (local or cloud)
+pnpm package manager
 
-### Routing & Layout
-- Basic routing setup via `react-router-dom`
-- `App.jsx` as the layout shell using `<Outlet />`
-- Public pages: `/`, `/register`, `/login`
-- Private pages: `/dashboard`, `/add-seizure`, `/emergency-alert`
+### Installation
+1. Clone the repository:
+git clone https://github.com/week-8-Capstone_-Emmaculate-M.git
+cd week-8-Capstone_-Emmaculate-M
+mkdir seizure-tracker
+cd seizure-tracker
+mkdir server
+mkdir client
 
-### Frontend Pages Created
-- `Home.jsx`
-- `Register.jsx`
-- `Login.jsx`
-- `Dashboard.jsx`
-- `AddSeizure.jsx`
-- `EmergencyAlert.jsx`
+2. Install server dependencies:
+cd server
+pnpm install
 
-### Components
-- `AlertCard.jsx` — reusable alert/notification component  
-- `SeizureForm.jsx` — reusable form component for adding seizure info  
+3. Install client dependencies:
+cd client
+pnpm install
 
-### Backend Routes
+## Running Locally
+### Start the backend server:
+cd server
+pnpm dev
 
-| Route | Method | Description |
-|-------|--------|-------------|
-| `/api/auth/register` | POST | Register a new user |
-| `/api/auth/login` | POST | Login & receive JWT |
-| `/api/seizure/` | GET, POST | View & add seizure entries (protected) |
-| `/api/seizure/:id` | DELETE | Delete seizure record (protected) |
-| `/api/alert/emergency` | POST | Send emergency alert (protected) |
+### Start the frontend dev server:
+cd client
+pnpm dev
 
-### Middleware
-- `authMiddleware.js` to protect private API routes via JWT token
+# API Endpoints
+Auth
+POST /api/auth/register - Register new user
+
+POST /api/auth/login - User login
+
+User
+GET /api/users/me - Get current user profile
+
+PATCH /api/users - Update user profile
+
+GET /api/users/emergency-contact - Get emergency contact
+
+PATCH /api/users/emergency-contact - Update emergency contact
+
+Seizures
+GET /api/seizures - Get user's seizures
+
+POST /api/seizures - Add new seizure
+
+PATCH /api/seizures/:id - Update seizure
+
+DELETE /api/seizures/:id - Delete seizure
+
+Alerts
+POST /api/alerts - Send emergency alert to contact
 
 ## Folder Structure (Frontend)
 ```
@@ -67,11 +97,21 @@ src/
 │   ├── AddSeizure.jsx
 │   └── EmergencyAlert.jsx
 ├── components/
+│   ├──tabs
+│   │   ├── AlertsTab.jsx
+│   │   ├── EmergencyContactTab.jsx
+│   │   ├── LogsTab.jsx
+│   │   └── ProfileTab.jsx
 │   ├── AlertCard.jsx
+│   ├── EmergencyAlertButton.jsx
+│   ├── EmergencyContactForm.jsx
+│   ├── LoadingSpinner.jsx
 │   ├── Navbar.jsx
+│   ├── ProfileEditForm.jsx
 │   └── SeizureForm.jsx
 ├── utils/
-│    └── api.js
+│    ├── api.js
+│    └── sendAlert.js
 ├── .env
 ```
 
@@ -94,58 +134,27 @@ server/
 │   └── authMiddleware.js
 ├── config/
 │   └── db.js
+├── utils
+│    └── sendAlert.js
 ├── .env
 └── server.js
 ```
 
-##  To Run the Project
 
-### Backend
-```bash
-cd server
-pnpm install
-pnpm dev
-```
-
-Ensure you have a `.env` with:
-```
-MONGO_URI=your_mongodb+srv://seizureAdmin:Nuru%2574710@cluster0.uqfpccd.mongodb.net/seizureTrackerDB?retryWrites=true&w=majority&appName=Cluster0mongodb_connection_string
-JWT_SECRET=big_secret
-PORT=5000
-```
-
-### Frontend
-```bash
-pnpm install
-pnpm dev
-```
-
-Ensure `utils/api.js` contains:
-```js
-import axios from 'axios';
-
-const api = axios.create({
-  baseURL: 'http://localhost:5000/api',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
-
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
-  if (token) config.headers.Authorization = `Bearer ${token}`;
-  return config;
-});
-
-export default api;
-```
-
-### Live Demo
+### Live Demo/Deployment URLs:
 - Live frontend: https://seizuresafe-frontend.vercel.app/
 
 - live backend: (https://week-8-capstone-emmaculate-m.onrender.com)
 
 ## Next Steps
-- Hook up Register & Login pages with real backend
-- Test form submissions (Add Seizure, Emergency Alert)
-- Add user feedback & error handling
+Integrate Real Notifications
+- Use services like Twilio (SMS) or SendGrid (email) for actual alerts.
+
+Add Features
+- Analytics/reporting on seizures.
+- User community/support.
+- Medication/appointment reminders.
+
+
+## Author:
+Emmaculate Mwania

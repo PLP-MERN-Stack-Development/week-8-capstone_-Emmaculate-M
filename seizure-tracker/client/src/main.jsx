@@ -1,11 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import './index.css';
 import App from './App.jsx';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import ProfileTab from './components/tabs/ProfileTab.jsx';
+import AlertsTab from './components/tabs/AlertsTab.jsx';
+import LogsTab from './components/tabs/LogsTab.jsx';
 import AddSeizure from './pages/AddSeizure';
 import EmergencyAlert from './pages/EmergencyAlert';
 import Home from './pages/Home';
@@ -15,7 +18,7 @@ import { AuthProvider } from './context/AuthContext';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Router>
-    <AuthProvider>      
+      <AuthProvider>
         <Routes>
           <Route path="/" element={<App />}>
             {/* Public Routes */}
@@ -25,13 +28,19 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 
             {/* Protected Routes */}
             <Route element={<PrivateRoute />}>
-              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="dashboard" element={<Dashboard />}>
+                {/* Nested Tab Routes */}
+                <Route index element={<Navigate to="profile" replace />} />
+                <Route path="profile" element={<ProfileTab />} />
+                <Route path="alerts" element={<AlertsTab />} />
+                <Route path="logs" element={<LogsTab />} />
+              </Route>
               <Route path="add-seizure" element={<AddSeizure />} />
-              <Route path="emergency-alert" element={<EmergencyAlert />} />
+              <Route path="emergency" element={<EmergencyAlert />} />
             </Route>
           </Route>
         </Routes>
-        </AuthProvider>
-      </Router>    
+      </AuthProvider>
+    </Router>
   </React.StrictMode>
 );

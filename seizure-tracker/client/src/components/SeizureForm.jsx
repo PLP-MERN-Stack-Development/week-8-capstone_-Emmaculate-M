@@ -26,7 +26,7 @@ export default function SeizureForm({ token }) {
 
     try {
       const res = await axios.post(
-        'http://localhost:5000/api/seizures',
+        'https://week-8-capstone-emmaculate-m.onrender.com/api/seizures',
         {
           type: selectedType,
           duration: formData.duration,
