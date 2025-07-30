@@ -15,7 +15,7 @@ const app = express();
 
 const allowedOrigins = [
   'http://localhost:5173',
-  process.env.CLIENT_URL,
+  'https://seizuresafe-frontend.vercel.app',
 ].filter(Boolean); // Filter out any undefined values
 
 app.use(cors({ 
