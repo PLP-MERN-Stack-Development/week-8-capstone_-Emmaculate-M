@@ -5,7 +5,7 @@ const isProduction = import.meta.env.MODE === 'production';
 
 const baseURL = isProduction
   ? 'https://week-8-capstone-emmaculate-m.onrender.com/api'
-  : import.meta.env.VITE_API_BASE_URL_LOCAL + '/api';
+  : 'http://localhost:5000/api';
 
 const api = axios.create({
   baseURL,
