@@ -36,8 +36,7 @@ export default function ProfileTab() {
   };
 
   const handleLogout = async () => {
-    try {
-      await api.post('/auth/logout');
+    try {      
       localStorage.removeItem('token');
       navigate('/login');
     } catch (error) {
