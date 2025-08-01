@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import api from '../../utils/api';
 import EmergencyContactForm from '../EmergencyContactForm';
 import LoadingSpinner from '../LoadingSpinner';
@@ -8,6 +9,7 @@ export default function ProfileTab() {
   const [userInfo, setUserInfo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -31,6 +33,16 @@ export default function ProfileTab() {
   const handleProfileUpdated = (updatedUser) => {
     setUserInfo(updatedUser);
     setEditing(false);
+  };
+
+  const handleLogout = async () => {
+    try {
+      await api.post('/auth/logout');
+      localStorage.removeItem('token');
+      navigate('/login');
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
   };
 
   if (loading) return <LoadingSpinner />;
@@ -57,14 +69,29 @@ export default function ProfileTab() {
         <p><span className="font-medium">Medical History:</span> {userInfo?.medicalHistory || 'Not provided'}</p>
       </div>
 
-      {/* Optional Edit Button */}
-      <div>
+      {/* Edit Button */}
+      <div className="space-x-2">
         <button
-          className="px-4 py-2 bg-violet text-white rounded hover:bg-indigo transition"
+          className="px-4 py-2 mr-3 rounded transition"
+          style={{
+            backgroundColor: '#A654DF',  
+            color: '#EFE1E8',            
+          }}
           onClick={() => setEditing(!editing)}
         >
           {editing ? 'Cancel Edit' : 'Edit Profile'}
+        </button>        
+        <button
+          className="px-4 py-2 rounded transition"
+          style={{
+            backgroundColor: '#420264',  
+            color: '#EFE1E8',            
+          }}
+          onClick={handleLogout}
+        >
+          Logout
         </button>
+
       </div>
 
       {/* Profile Edit Form */}
@@ -79,7 +106,7 @@ export default function ProfileTab() {
           initialContact={userInfo?.emergencyContact}
           onContactUpdated={handleEmergencyContactUpdate}
         />
-      </div>
+      </div>     
     </section>
   );
 }
