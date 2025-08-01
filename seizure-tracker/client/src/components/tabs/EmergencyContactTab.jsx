@@ -28,6 +28,13 @@ export default function EmergencyContactTab() {
   return (
     <div className="p-4">
       <h2 className="text-xl font-semibold mb-4 text-indigo">Manage Emergency Contact</h2>
+
+      {contact && (
+        <p className="mb-4 text-sm text-gray-700">
+          <span className="font-medium text-indigo">Current Contact:</span> {contact}
+        </p>
+      )}
+
       <EmergencyContactForm
         key={contact}
         initialContact={contact}
