@@ -4,8 +4,8 @@ import axios from 'axios';
 const isProduction = import.meta.env.MODE === 'production';
 
 const baseURL = isProduction
-  ? 'https://week-8-capstone-emmaculate-m.onrender.com'
-  : 'http://localhost:5000';
+  ? 'https://week-8-capstone-emmaculate-m.onrender.com/api'
+  : 'http://localhost:5000/api';
 
 const api = axios.create({
   baseURL,
