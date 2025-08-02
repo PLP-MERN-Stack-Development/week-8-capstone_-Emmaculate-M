@@ -142,7 +142,7 @@ server/
 
 
 ### Live Demo/Deployment URLs:
-- Live frontend: https://seizuresafe-frontend.vercel.app/
+- Live frontend: https://seizuresafe00frontend.vercel.app/
 
 - live backend: (https://week-8-capstone-emmaculate-m.onrender.com)
 
